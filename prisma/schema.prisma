@@ -20,3 +20,16 @@ model Deliveryman {
 
   @@map("deliverymans")
 }
+
+model Customer {
+  id          String  @id @default(uuid())
+  name        String
+  email       String  @unique
+  phone       String  @unique
+  hasWhatsapp Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("customers")
+}
