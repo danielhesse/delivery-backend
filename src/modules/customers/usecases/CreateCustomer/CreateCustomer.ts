@@ -20,7 +20,7 @@ export class CreateCustomer {
     });
 
     if (customerExists) {
-      throw new Error("404/Customer already exists!");
+      throw new Error("400|Customer already exists!");
     }
 
     const hashPassword = await hash(password, 10);

@@ -16,13 +16,13 @@ export class AuthenticateCustomer {
     });
 
     if (!customer) {
-      throw new Error("400/Email or password is invalid!");
+      throw new Error("400|Email or password is invalid!");
     }
 
     const passwordMatch = await compare(password, customer.password);
 
     if (!passwordMatch) {
-      throw new Error("400/Email or password is invalid!");
+      throw new Error("400|Email or password is invalid!");
     }
 
     const token = auth.sign({ email }, customer.id);
