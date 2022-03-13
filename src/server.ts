@@ -11,17 +11,17 @@ server.use(routes);
 
 server.use((err: Error, _1: Request, response: Response, _2: NextFunction) => {
   if (err instanceof Error) {
-    const [status, message] = err.message.split('|');
+    const [status, error] = err.message.split('|');
 
     return response.status(Number(status)).json({
       status: getReasonPhrase(status),
-      message
+      body: { error }
     });
   }
 
   return response.status(500).json({
     status: getReasonPhrase(500),
-    message: err
+    body: { error: err }
   });
 });
 

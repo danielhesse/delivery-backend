@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { getReasonPhrase } from "http-status-codes";
 import { CreateCustomer } from "./CreateCustomer";
 
 export class CreateCustomerController {
@@ -15,6 +16,9 @@ export class CreateCustomerController {
       hasWhatsapp
     });
 
-    return response.status(201).json(result);
+    return response.status(201).json({
+      status: getReasonPhrase(201),
+      body: result
+    });
   }
 }

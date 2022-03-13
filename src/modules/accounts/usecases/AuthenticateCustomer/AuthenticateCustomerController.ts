@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { getReasonPhrase } from "http-status-codes";
 import { AuthenticateCustomer } from "./AuthenticateCustomer";
 
 export class AuthenticateCustomerController {
@@ -12,12 +13,15 @@ export class AuthenticateCustomerController {
       password
     });
 
-    return response.json({
-      customer: {
-        name: customer.name,
-        email: customer.email
-      },
-      token
+    return response.status(200).json({
+      status: getReasonPhrase(200),
+      body: {
+        customer: {
+          name: customer.name,
+          email: customer.email
+        },
+        token
+      }
     });
   }
 }
