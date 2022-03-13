@@ -18,6 +18,7 @@ model Deliveryman {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  Delivery Delivery[]
   @@map("deliverymans")
 }
 
@@ -31,5 +32,24 @@ model Customer {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  Delivery Delivery[]
   @@map("customers")
+}
+
+model Delivery {
+  id         String   @id @default(uuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  deliverymanId String
+  deliveryman   Deliveryman @relation(fields: [deliverymanId], references: [id])
+
+  product     String
+  description String?
+  endAt       DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("deliveries")
 }
