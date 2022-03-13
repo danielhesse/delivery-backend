@@ -10,8 +10,8 @@ server.get("/", (_, response) => {
 });
 
 server.use((_, response) => {
-  return response.status(400).json({
-    status: 400,
+  return response.status(404).json({
+    status: 404,
     message: "Route not found!"
   });
 });
