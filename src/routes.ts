@@ -1,19 +1,22 @@
 import { Router } from "express";
 import { AuthenticateCustomerController } from "./modules/accounts/usecases/AuthenticateCustomer/AuthenticateCustomerController";
+import { AuthenticateDeliverymanController } from "./modules/accounts/usecases/AuthenticateDeliveryman/AuthenticateDeliverymanController";
 import { CreateCustomerController } from "./modules/customers/usecases/CreateCustomer/CreateCustomerController";
 import { CreateDeliverymanController } from "./modules/deliverymans/usecases/CreateDeliveryman/CreateDeliverymanController";
 
 const routes = Router();
 
 const createCustomerController = new CreateCustomerController();
-const authenticateCustomerController = new AuthenticateCustomerController();
 const createDeliverymanController = new CreateDeliverymanController();
 
-routes.post("/customers", createCustomerController.handle);
+const authenticateCustomerController = new AuthenticateCustomerController();
+const authenticateDeliverymanController = new AuthenticateDeliverymanController();
 
-routes.post("/login", authenticateCustomerController.handle);
+routes.post("/customers", createCustomerController.handle);
+routes.post("/customers/login", authenticateCustomerController.handle);
 
 routes.post("/deliverymans", createDeliverymanController.handle);
+routes.post("/deliverymans/login", authenticateDeliverymanController.handle);
 
 routes.use((_, response) => {
   return response.status(404).json({

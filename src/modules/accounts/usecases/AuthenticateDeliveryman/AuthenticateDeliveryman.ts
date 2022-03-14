@@ -2,35 +2,35 @@ import { prisma } from "../../../../database/prisma";
 import { compare } from "bcrypt";
 import { auth } from "../../../../config/auth";
 
-interface IAuthenticateCustomerRequest {
+interface IAuthenticateDeliverymanRequest {
   email: string;
   password: string;
 }
 
-export class AuthenticateCustomer {
-  async execute({ email, password }: IAuthenticateCustomerRequest) {
-    const customer = await prisma.customer.findFirst({
+export class AuthenticateDeliveryman {
+  async execute({ email, password }: IAuthenticateDeliverymanRequest) {
+    const deliveryman = await prisma.deliveryman.findFirst({
       where: {
         email
       },
     });
 
-    if (!customer) {
+    if (!deliveryman) {
       throw new Error("400|Email or password is invalid!");
     }
 
-    const passwordMatch = await compare(password, customer.password);
+    const passwordMatch = await compare(password, deliveryman.password);
 
     if (!passwordMatch) {
       throw new Error("400|Email or password is invalid!");
     }
 
     const token = auth.sign({
-      userId: customer.id, type: "customer", data: {
+      userId: deliveryman.id, type: "deliveryman", data: {
         email
       }
     });
 
-    return { token, customer };
+    return { token, deliveryman };
   }
 }
