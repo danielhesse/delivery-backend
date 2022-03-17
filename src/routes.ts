@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { ensureAuthenticatedCustomer } from "./middlewares/ensureAuthenticatedCustomer";
 import { AuthenticateCustomerController } from "./modules/accounts/usecases/AuthenticateCustomer/AuthenticateCustomerController";
 import { AuthenticateDeliverymanController } from "./modules/accounts/usecases/AuthenticateDeliveryman/AuthenticateDeliverymanController";
 import { CreateCustomerController } from "./modules/customers/usecases/CreateCustomer/CreateCustomerController";
@@ -21,7 +22,7 @@ routes.post("/customers/login", authenticateCustomerController.handle);
 routes.post("/deliverymans", createDeliverymanController.handle);
 routes.post("/deliverymans/login", authenticateDeliverymanController.handle);
 
-routes.post("/deliveries", createDeliveryController.handle);
+routes.post("/deliveries", ensureAuthenticatedCustomer, createDeliveryController.handle);
 
 routes.use((_, response) => {
   return response.status(404).json({

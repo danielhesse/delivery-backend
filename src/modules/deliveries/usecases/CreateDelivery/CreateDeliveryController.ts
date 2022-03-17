@@ -3,7 +3,8 @@ import { CreateDelivery } from "./CreateDelivery";
 
 export class CreateDeliveryController {
   async handle(request: Request, response: Response) {
-    const { customerId, product, description } = request.body;
+    const { product, description } = request.body;
+    const { customerId } = request;
 
     const createDelivery = new CreateDelivery();
 
